@@ -54,35 +54,48 @@ window.addEventListener(
     const pinInner = document.querySelector(".sec03 .sec-block");
     const pinItems = document.querySelectorAll(".sec03 .item");
 
-		let isScrolling = false;
+    // let isScrolling = false;
 
-		// pinSec.addEventListener('touchstart', function(event) {
-		// 		// sec03에 터치가 시작되었을 때 스크롤을 멈추기
-		// 		isScrolling = true;
-		// });
+    // pinSec.addEventListener('touchstart', function(event) {
+    // 		// sec03에 터치가 시작되었을 때 스크롤을 멈추기
+    // 		isScrolling = true;
+    // });
 
-		// pinSec.addEventListener('touchend', function(event) {
-		// 		// sec03에서 터치가 끝나면 스크롤을 다시 활성화
-		// 		isScrolling = false;
-		// });
+    // pinSec.addEventListener('touchend', function(event) {
+    // 		// sec03에서 터치가 끝나면 스크롤을 다시 활성화
+    // 		isScrolling = false;
+    // });
+
+    let lastTouchY = 0;
+    let scrollSpeed = 0.1; // 속도를 조절하는 값 (0.1은 천천히, 1은 빠르게)
+
+    addEventListener("touchstart", (e) => {
+      lastTouchY = e.touches[0].clientY;
+    });
+
+    addEventListener("touchmove", (e) => {
+      let deltaY = lastTouchY - e.touches[0].clientY;
+      window.scrollBy(0, deltaY * scrollSpeed);
+      lastTouchY = e.touches[0].clientY;
+    });
 
     let height = pinInner.offsetHeight;
-		this.addEventListener("resize", function(){
-			height = pinInner.offsetHeight;
-		})
+    this.addEventListener("resize", function () {
+      height = pinInner.offsetHeight;
+    });
 
     addEventListener("scroll", function () {
-			let scrollTop = window.scrollY;
+      let scrollTop = window.scrollY;
       let pinSecTop = pinSec.getBoundingClientRect().top;
       let sec03Top = scrollTop + pinSecTop;
-      
-			// if (isScrolling) {
-			// 	// 스크롤을 sec03에서 멈추기 위해 스크롤 위치를 고정
-			// 	window.scrollTo(0, pinSec.offsetTop);
-			// }
+
+      // if (isScrolling) {
+      // 	// 스크롤을 sec03에서 멈추기 위해 스크롤 위치를 고정
+      // 	window.scrollTo(0, pinSec.offsetTop);
+      // }
 
       if (scrollTop >= sec03Top && scrollTop < sec03Top + height * 3) {
-				//if(scrollTop > sec03Top-100 && scrollTop < sec03Top+100) scrollTo(0,pinSec.offsetTop)
+        //if(scrollTop > sec03Top-100 && scrollTop < sec03Top+100) scrollTo(0,pinSec.offsetTop)
         pinItems.forEach((pinItem, idx) => {
           pinItem.style.position = "fixed"; // fixed로 고정시킴
           const targetTop = sec03Top + height * idx - scrollTop;
@@ -97,7 +110,6 @@ window.addEventListener(
         });
       }
     });
-
 
     // let pinTl = gsap.timeline({
     // 	scrollTrigger: {
