@@ -67,9 +67,6 @@ window.addEventListener(
 		// });
 
     let height = pinInner.offsetHeight;
-    let offset = pinItems.length;
-    let hap = height * offset;
-    console.log(hap);
 
     addEventListener("scroll", function () {
 			let scrollTop = window.scrollY;
@@ -82,7 +79,7 @@ window.addEventListener(
 			// }
 
       if (scrollTop >= sec03Top && scrollTop < sec03Top + height * 3) {
-				//if(scrollTop > sec03Top-50 && scrollTop < sec03Top+50) scrollTo(0,pinSec.offsetTop)
+				//if(scrollTop > sec03Top-100 && scrollTop < sec03Top+100) scrollTo(0,pinSec.offsetTop)
         pinItems.forEach((pinItem, idx) => {
           pinItem.style.position = "fixed"; // fixed로 고정시킴
           const targetTop = sec03Top + height * idx - scrollTop;
