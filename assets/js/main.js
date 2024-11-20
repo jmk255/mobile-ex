@@ -66,18 +66,18 @@ window.addEventListener(
     // 		isScrolling = false;
     // });
 
-    let lastTouchY = 0;
-    let scrollSpeed = 0.1; // 속도를 조절하는 값 (0.1은 천천히, 1은 빠르게)
+    // let lastTouchY = 0;
+    // let scrollSpeed = 0.1; // 속도를 조절하는 값 (0.1은 천천히, 1은 빠르게)
 
-    addEventListener("touchstart", (e) => {
-      lastTouchY = e.touches[0].clientY;
-    });
+    // addEventListener("touchstart", (e) => {
+    //   lastTouchY = e.touches[0].clientY;
+    // });
 
-    addEventListener("touchmove", (e) => {
-      let deltaY = lastTouchY - e.touches[0].clientY;
-      window.scrollBy(0, deltaY * scrollSpeed);
-      lastTouchY = e.touches[0].clientY;
-    });
+    // addEventListener("touchmove", (e) => {
+    //   let deltaY = lastTouchY - e.touches[0].clientY;
+    //   window.scrollBy(0, deltaY * scrollSpeed);
+    //   lastTouchY = e.touches[0].clientY;
+    // });
 
     let height = pinInner.offsetHeight;
     this.addEventListener("resize", function () {
