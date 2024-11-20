@@ -67,7 +67,7 @@ window.addEventListener(
     // });
 
     let lastTouchY = 0;
-    let scrollSpeed = 0.1; // 속도를 조절하는 값 (0.1은 천천히, 1은 빠르게)
+    let scrollSpeed = 0.05; // 속도를 조절하는 값 (0.1은 천천히, 1은 빠르게)
 
     addEventListener("touchstart", (e) => {
       lastTouchY = e.touches[0].clientY;
