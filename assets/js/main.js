@@ -67,6 +67,9 @@ window.addEventListener(
 		// });
 
     let height = pinInner.offsetHeight;
+		this.addEventListener("resize", function(){
+			height = pinInner.offsetHeight;
+		})
 
     addEventListener("scroll", function () {
 			let scrollTop = window.scrollY;
