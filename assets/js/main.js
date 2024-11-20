@@ -66,52 +66,18 @@ window.addEventListener(
     // 		isScrolling = false;
     // });
 
-    let isTouching = false; // 터치 시작 여부
-    let startTouchY = 0; // 터치 시작 Y 위치
-    let scrollStartY = 0; // 스크롤 시작 Y 위치
-    let currentY = 0; // 현재 Y 위치 (스크롤 위치)
-    let targetY = 0; // 목표 Y 위치 (새로운 스크롤 위치)
-    let easeFactor = 0.1; // 부드럽게 이동하는 정도 (0과 1 사이 값)
+    let lastTouchY = 0;
+    let scrollSpeed = 0.1; // 속도를 조절하는 값 (0.1은 천천히, 1은 빠르게)
 
-    function smoothScroll() {
-      // 현재 스크롤 위치에서 목표 위치까지 점차 이동
-      currentY += (targetY - currentY) * easeFactor;
-
-      window.scrollTo(0, currentY); // 스크롤을 부드럽게 이동
-
-      // 목표 위치에 도달하면 애니메이션을 멈춤
-      if (Math.abs(targetY - currentY) > 0.1) {
-        requestAnimationFrame(smoothScroll); // 계속 부드럽게 이동
-      }
-    }
-
-    // 터치 시작 시 호출
-    document.addEventListener("touchstart", function (event) {
-      isTouching = true;
-      startTouchY = event.touches[0].clientY; // 터치 시작 위치 저장
-      scrollStartY = window.scrollY; // 스크롤 시작 위치 저장
-      targetY = scrollStartY; // 초기 목표 Y 위치 설정
-      currentY = targetY; // 현재 Y 위치 초기화
+    addEventListener("touchstart", (e) => {
+      lastTouchY = e.touches[0].clientY;
     });
 
-    // 터치 이동 시 호출
-    document.addEventListener("touchmove", function (event) {
-      if (!isTouching) return;
-
-      const touchY = event.touches[0].clientY; // 현재 터치 위치
-      const deltaY = touchY - startTouchY; // 터치의 이동 거리
-      targetY = scrollStartY - deltaY * 0.5; // 목표 위치 업데이트 (0.5로 속도 조정)
-
-      // 기본 스크롤 동작을 막아서 브라우저 기본 스크롤을 방지
-      event.preventDefault();
+    addEventListener("touchmove", (e) => {
+      let deltaY = lastTouchY - e.touches[0].clientY;
+      window.scrollBy(0, deltaY * scrollSpeed);
+      lastTouchY = e.touches[0].clientY;
     });
-
-    // 터치 종료 시 호출
-    document.addEventListener("touchend", function (event) {
-      isTouching = false;
-      smoothScroll(); // 터치 종료 후 부드럽게 스크롤 시작
-    });
-    //==========================================================
 
     let height = pinInner.offsetHeight;
     this.addEventListener("resize", function () {
