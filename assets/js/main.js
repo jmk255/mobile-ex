@@ -66,19 +66,38 @@ window.addEventListener(
     // 		isScrolling = false;
     // });
 
-    let lastTouchY = 0;
-    let scrollSpeed = 0.05; // 속도를 조절하는 값 (0.1은 천천히, 1은 빠르게)
+    let isTouching = false; // 터치 시작 여부
+    let startTouchY = 0; // 터치 시작 Y 위치
+    let scrollStartY = 0; // 스크롤 시작 Y 위치
 
-    addEventListener("touchstart", (e) => {
-      lastTouchY = e.touches[0].clientY;
+    // 터치 시작 시 호출
+    document.addEventListener("touchstart", function (event) {
+      isTouching = true;
+      startTouchY = event.touches[0].clientY; // 터치 시작 위치 저장
+      scrollStartY = window.scrollY; // 스크롤 시작 위치 저장
     });
 
-    addEventListener("touchmove", (e) => {
-      let deltaY = lastTouchY - e.touches[0].clientY;
-      window.scrollBy(0, deltaY * scrollSpeed);
-      lastTouchY = e.touches[0].clientY;
+    // 터치 이동 시 호출
+    document.addEventListener("touchmove", function (event) {
+      if (!isTouching) return;
+
+      const touchY = event.touches[0].clientY; // 현재 터치 위치
+      const deltaY = touchY - startTouchY; // 터치의 이동 거리
+      const newScrollY = scrollStartY - deltaY * 0.5; // 스크롤 속도 조절 (0.5로 느리게)
+
+      // 스크롤을 새 위치로 이동
+      window.scrollTo(0, newScrollY);
+
+      // 기본 스크롤 동작을 막아서 브라우저 기본 스크롤을 방지
+      event.preventDefault();
     });
 
+    // 터치 종료 시 호출
+    document.addEventListener("touchend", function (event) {
+      isTouching = false;
+    });
+
+    
     let height = pinInner.offsetHeight;
     this.addEventListener("resize", function () {
       height = pinInner.offsetHeight;
