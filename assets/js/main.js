@@ -50,9 +50,6 @@ window.addEventListener(
 
     // Sec03 Event
     // 화면 스크롤
-    const pinSec = document.querySelector(".sec03");
-    const pinInner = document.querySelector(".sec03 .sec-block");
-    const pinItems = document.querySelectorAll(".sec03 .item");
 
     // let isScrolling = false;
 
@@ -69,54 +66,102 @@ window.addEventListener(
     // let lastTouchY = 0;
     // let scrollSpeed = 0.1; // 속도를 조절하는 값 (0.1은 천천히, 1은 빠르게)
 
-    
     // addEventListener("touchmove", (e) => {
-      //   let deltaY = lastTouchY - e.touches[0].clientY;
-      //   window.scrollBy(0, deltaY * scrollSpeed);
-      //   lastTouchY = e.touches[0].clientY;
-      // });
-      
-    let scrollSpeed = 0.01; // 기본 스크롤 속도
+    //   let deltaY = lastTouchY - e.touches[0].clientY;
+    //   window.scrollBy(0, deltaY * scrollSpeed);
+    //   lastTouchY = e.touches[0].clientY;
+    // });
 
-    addEventListener('touchmove', function(event) {
-      // 터치 스크롤 시 속도 조정
-      let touchMove = event.touches[0].clientY - event.touches[1]?.clientY || 0;
-      console.log(event.touches[0].clientY)
-      window.scrollBy(0, touchMove * scrollSpeed);
-    });
+    // let scrollSpeed = 0.01; // 기본 스크롤 속도
+
+    // addEventListener("touchmove", function (event) {
+    //   // 터치 스크롤 시 속도 조정
+    //   let touchMove = event.touches[0].clientY - event.touches[1]?.clientY || 0;
+    //   console.log(event.touches[0].clientY);
+    //   window.scrollBy(0, touchMove * scrollSpeed);
+    // });
+    const pinSec = document.querySelector(".sec03");
+    const pinInner = document.querySelector(".sec03 .sec-block");
+    const pinItems = document.querySelectorAll(".sec03 .item");
 
     let height = pinInner.offsetHeight;
-    this.addEventListener("resize", function () {
+    addEventListener("resize", function () {
       height = pinInner.offsetHeight;
     });
 
-    addEventListener("scroll", function () {
+
+    let startY = 0;
+    let endY = 0;
+    let scrollSpeed = 0.1;  // 스크롤 속도 (작을수록 느리게 움직임)
+    let isScrollingBlocked = false;  // 스크롤이 막혔는지 여부
+    let blockDuration = 500;  // 스크롤 멈추는 시간 (ms)
+
+    addEventListener("touchstart", function(e) {
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+
+    addEventListener("touchmove", function(e) {
+      e.preventDefault();
+      if (isScrollingBlocked) {
+        // 스크롤이 차단된 상태라면 아무 것도 하지 않음
+        return;
+      }
+      endY = e.touches[0].clientY;
+      let distanceMoved = startY - endY;
+
+      // 이동 속도를 동적으로 조정
+      let speedAdjusted = distanceMoved * scrollSpeed;
+
       let scrollTop = window.scrollY;
       let pinSecTop = pinSec.getBoundingClientRect().top;
       let sec03Top = scrollTop + pinSecTop;
+      let maxScroll = sec03Top
 
-      // if (isScrolling) {
-      // 	// 스크롤을 sec03에서 멈추기 위해 스크롤 위치를 고정
-      // 	window.scrollTo(0, pinSec.offsetTop);
+      // 스크롤 이동 제한
+      
+      let newScroll = Math.max(0, Math.min(window.scrollY + speedAdjusted, maxScroll));
+      window.scrollTo(0, newScroll);
+      
+      // 스크롤 멈추고 일정 시간 후 재개
+      // if (newScroll === maxScroll) {
+      //   isScrollingBlocked = true;
+
+      //   // 일정 시간 후 스크롤을 다시 가능하게 만듦
+      //   setTimeout(function() {
+      //     isScrollingBlocked = false;
+      //   }, blockDuration);
       // }
-      // for(let i = 0; i < pinItems.length; i++) {
-      //  if(scrollTop > sec03Top+height*i-10 && scrollTop < sec03Top+height*i+10) scrollTo(0,pinSec.offsetTop+height*i)
-      // };
-      if (scrollTop >= sec03Top && scrollTop < sec03Top + height * 3) {
-        pinItems.forEach((pinItem, idx) => {
-          pinItem.style.position = "fixed"; // fixed로 고정시킴
-          const targetTop = sec03Top + height * idx - scrollTop;
+    }, { passive: false });    
 
-          // top 값을 계산하고, 0보다 작으면 0으로 설정
-          pinItem.style.top = Math.max(0, targetTop) + "px";
-        });
-      } else {
-        pinItems.forEach((pinItem) => {
-          pinItem.style.position = "relative"; // 스크롤 범위를 벗어나면 absolute로 위치 고정
-          pinItem.style.top = "0"; // top 값을 초기화
-        });
-      }
-    });
+    addEventListener("touchend", function() {
+      startY = 0;
+      endY = 0;
+    }, { passive: true });
+
+
+    // addEventListener("scroll", function () {
+    //   let scrollTop = window.scrollY;
+    //   let pinSecTop = pinSec.getBoundingClientRect().top;
+    //   let sec03Top = scrollTop + pinSecTop;
+
+    //   if (scrollTop >= sec03Top && scrollTop < sec03Top + height * 3) {
+    //     pinItems.forEach((pinItem, idx) => {
+    //       pinItem.style.position = "fixed"; // fixed로 고정시킴
+    //       const targetTop = sec03Top + height * idx - scrollTop;
+
+    //       // top 값을 계산하고, 0보다 작으면 0으로 설정
+    //       pinItem.style.top = Math.max(0, targetTop) + "px";
+
+    //       console.log(pinItems[3].style.top)
+    //       // If it's the last pin item and the scroll reaches the maxScrollTop, stop scrolling
+    //     });
+    //   } else {
+    //     pinItems.forEach((pinItem) => {
+    //       pinItem.style.position = "relative"; // 스크롤 범위를 벗어나면 absolute로 위치 고정
+    //       pinItem.style.top = "0"; // top 값을 초기화
+    //     });
+    //   }
+    // });
 
     // let pinTl = gsap.timeline({
     // 	scrollTrigger: {

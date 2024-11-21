@@ -418,6 +418,7 @@
 	position: relative;
 	touch-action: pan-y;
 	width:100%;
+	max-width:720px;
 	height:100vh;
 	will-change: transform;
 }
@@ -430,16 +431,22 @@
 .sec03 .item02 {
 	z-index:2;
 	background-color: #ccc;
+	position:fixed;
+	top:100%;
 }
 
 .sec03 .item03 {
 	z-index:3;
 	background-color: #da291c;
+	position:fixed;
+	top:100%;
 }
 
 .sec03 .item04 {
 	z-index:4;
 	background-color: #e4e0d6;
+	position:fixed;
+	top:100%;
 }
 
 .sec03 .txt {
