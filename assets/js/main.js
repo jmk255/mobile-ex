@@ -94,7 +94,7 @@ window.addEventListener(
       // 	window.scrollTo(0, pinSec.offsetTop);
       // }
       for(let i = 0; i < pinItems.length; i++) {
-       if(scrollTop > sec03Top+height*i-50 && scrollTop < sec03Top+height*i+50) scrollTo(0,pinSec.offsetTop+height*i)
+       if(scrollTop > sec03Top+height*i-30 && scrollTop < sec03Top+height*i+30) scrollTo(0,pinSec.offsetTop+height*i)
       };
       if (scrollTop >= sec03Top && scrollTop < sec03Top + height * 3) {
         pinItems.forEach((pinItem, idx) => {
