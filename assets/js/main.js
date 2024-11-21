@@ -76,24 +76,12 @@ window.addEventListener(
       //   lastTouchY = e.touches[0].clientY;
       // });
       
-      let scrollSpeed = 0.1; // 기본 스크롤 속도
-      // let firstTouchY;
-      // let lastTouchY;
-
-      // addEventListener("touchstart", (e) => {
-      //   firstTouchY = e.touches[0].clientY;
-      //   console.log(lastTouchY)
-      // });
-
-      // addEventListener("touchend", (e) => {
-      //   lastTouchY = e.changedTouches[0].clientY;
-      //   console.log(lastTouchY)
-      // });
+    let scrollSpeed = 0.1; // 기본 스크롤 속도
 
     addEventListener('touchmove', function(event) {
       // 터치 스크롤 시 속도 조정
-      let touchMove = event.touches[0].clientY - event.touches[1]?.clientY || 0;
-      console.log(event.touches[0].clientY)
+      let touchMove = event.touches[0].clientY;
+      //console.log(event.touches[0].clientY)
       window.scrollBy(0, touchMove * scrollSpeed);
     });
 
