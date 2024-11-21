@@ -69,15 +69,33 @@ window.addEventListener(
     // let lastTouchY = 0;
     // let scrollSpeed = 0.1; // 속도를 조절하는 값 (0.1은 천천히, 1은 빠르게)
 
-    // addEventListener("touchstart", (e) => {
-    //   lastTouchY = e.touches[0].clientY;
-    // });
-
+    
     // addEventListener("touchmove", (e) => {
-    //   let deltaY = lastTouchY - e.touches[0].clientY;
-    //   window.scrollBy(0, deltaY * scrollSpeed);
-    //   lastTouchY = e.touches[0].clientY;
-    // });
+      //   let deltaY = lastTouchY - e.touches[0].clientY;
+      //   window.scrollBy(0, deltaY * scrollSpeed);
+      //   lastTouchY = e.touches[0].clientY;
+      // });
+      
+      let scrollSpeed = 0.1; // 기본 스크롤 속도
+      // let firstTouchY;
+      // let lastTouchY;
+
+      // addEventListener("touchstart", (e) => {
+      //   firstTouchY = e.touches[0].clientY;
+      //   console.log(lastTouchY)
+      // });
+
+      // addEventListener("touchend", (e) => {
+      //   lastTouchY = e.changedTouches[0].clientY;
+      //   console.log(lastTouchY)
+      // });
+
+    addEventListener('touchmove', function(event) {
+      // 터치 스크롤 시 속도 조정
+      let touchMove = event.touches[0].clientY - event.touches[1]?.clientY || 0;
+      console.log(event.touches[0].clientY)
+      window.scrollBy(0, touchMove * scrollSpeed);
+    });
 
     let height = pinInner.offsetHeight;
     this.addEventListener("resize", function () {
@@ -93,9 +111,9 @@ window.addEventListener(
       // 	// 스크롤을 sec03에서 멈추기 위해 스크롤 위치를 고정
       // 	window.scrollTo(0, pinSec.offsetTop);
       // }
-      for(let i = 0; i < pinItems.length; i++) {
-       if(scrollTop > sec03Top+height*i-10 && scrollTop < sec03Top+height*i+10) scrollTo(0,pinSec.offsetTop+height*i)
-      };
+      // for(let i = 0; i < pinItems.length; i++) {
+      //  if(scrollTop > sec03Top+height*i-10 && scrollTop < sec03Top+height*i+10) scrollTo(0,pinSec.offsetTop+height*i)
+      // };
       if (scrollTop >= sec03Top && scrollTop < sec03Top + height * 3) {
         pinItems.forEach((pinItem, idx) => {
           pinItem.style.position = "fixed"; // fixed로 고정시킴
