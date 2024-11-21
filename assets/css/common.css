@@ -6,7 +6,8 @@
 }
 
 html {
-	overflow-x: hidden;
+	scroll-behavior: smooth;
+    overflow-x: hidden;
 	color: #191919;
 	font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 	font-size: 62.5% !important;
@@ -28,6 +29,7 @@ html {
 } */
 
 body {
+    scroll-behavior: smooth;
 	font-size: 1.6rem;
 }
 
