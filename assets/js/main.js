@@ -76,12 +76,12 @@ window.addEventListener(
       //   lastTouchY = e.touches[0].clientY;
       // });
       
-    let scrollSpeed = 0.05; // 기본 스크롤 속도
+    let scrollSpeed = 0.01; // 기본 스크롤 속도
 
     addEventListener('touchmove', function(event) {
       // 터치 스크롤 시 속도 조정
       let touchMove = event.touches[0].clientY - event.touches[1]?.clientY || 0;
-      //console.log(event.touches[0].clientY)
+      console.log(event.touches[0].clientY)
       window.scrollBy(0, touchMove * scrollSpeed);
     });
 
