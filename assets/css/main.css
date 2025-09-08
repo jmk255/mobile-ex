@@ -269,7 +269,7 @@
 }
 
 .sec02 .hd p {
-	font-size:10px; /*3.4rem*/
+	font-size:3.4rem;
 	padding-bottom:8px;
 }
 
@@ -385,7 +385,7 @@
 	}
 
 	.sec02 .bd .card .txt .t01 {
-		font-size:1.5rem;
+		font-size:10px;
 		padding-bottom:16px;
 	}
 }
